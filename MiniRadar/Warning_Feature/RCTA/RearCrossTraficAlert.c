@@ -11,17 +11,20 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#include "Constants.h"
 #include "RearCrossTraficAlert.h"
 
-uint8_t RCTA_IsSpeedUnder10kmh(uint8_t speed) {
-	return speed < 10;
+boolean RCTA_IsSpeedUnder10kmh(uint8_t speed) {
+	return (speed < RCTA_SPEED);
 }
 
-uint8_t RCTA_IsGearOnReverse(uint8_t gear) {
-	return gear == REVERSE;
+boolean RCTA_IsGearOnReverse(uint8_t gear) {
+	return (gear == REVERSE);
 }
 
-uint8_t RCTA_IsSytemStateMachineActive(uint8_t SSM_status) {
-	return SSM_status == ACTIVE;
+boolean RCTA_IsSytemStateMachineActive(uint8_t SSM_status) {
+	return (SSM_status == SSM_ACTIVE);
+}
+
+boolean RCTA_IsInCollisionZone(uint8_t distance) {
+	return (distance < RCTA_COLL_DISTANCE);
 }

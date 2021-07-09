@@ -11,21 +11,24 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#include "Constants.h"
 #include "LaneChangeWarning.h"
 
-uint8_t LCW_IsSpeedOver20kmh(uint8_t speed) {
-	return speed >= 20;
+boolean LCW_IsSpeedOver20kmh(uint8_t speed) {
+	return (speed > LCW_SPEED);
 }
 
-uint8_t LCW_IsGearOnForward(uint8_t gear) {
-	return gear == FORWARD;
+boolean LCW_IsGearOnForward(uint8_t gear) {
+	return (gear == FORWARD);
 }
 
-uint8_t LCW_IsSteeringWheelAngleOver6(uint8_t angle) {
-	return angle >= 6;
+boolean LCW_IsSteeringWheelAngleOver6(uint8_t angle) {
+	return (angle > LCW_STEERING_ANGLE);
 }
 
-uint8_t LCW_IsSystemStateMachineActive(uint8_t SSM_status) {
-	return SSM_status == ACTIVE;
+boolean LCW_IsSystemStateMachineActive(uint8_t SSM_status) {
+	return (SSM_status == SSM_ACTIVE);
+}
+
+boolean LCW_IsInCollisionZone(uint8_t distance) {
+	return (distance < LCW_COLL_DISTANCE);
 }
