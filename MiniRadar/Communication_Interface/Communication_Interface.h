@@ -16,6 +16,7 @@
 
 extern time_t seconds;
 extern ErrorStructure error;
+extern testStructure test;
 
 void LostCommunicationHandler(Error error, char* error_message);
 INPUT ComIF_read_inputData(FILE* fp);

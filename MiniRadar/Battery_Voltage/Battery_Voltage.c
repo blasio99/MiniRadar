@@ -22,6 +22,6 @@ boolean BV_IsBatteryOverVoltage(uint8_t voltage) {
 }
 
 boolean BV_IsBatteryVoltageInRange(uint8_t voltage) {
-	return (BV_IsBatteryUnderVoltage(voltage) == FALSE
-		&& BV_IsBatteryOverVoltage(voltage) == FALSE);
+	return ((BV_IsBatteryUnderVoltage(voltage) == FALSE)
+	 	 && (BV_IsBatteryOverVoltage (voltage) == FALSE));
 }

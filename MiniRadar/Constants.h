@@ -41,7 +41,7 @@
 #define		FORWARD				1
 #define		REVERSE				2
 #define		PARKED				3
-#define		GEAR_MAX_VALUE		4
+#define		GEAR_MAX_VALUE		3
 #define		GEAR_MIN_VALUE		0
 
 /* ERROR MESSAGES */
@@ -84,6 +84,16 @@
 #define		BATTERY_VOLTAGE_MIN 8			/* Minimum voltage: 8V  */
 #define		BATTERY_VOLTAGE_MAX 16			/* Maximum voltage: 16V */
 
+/* TEST defines */
+#define		SSMSTATE_LENGTH		11			/* Maximum length for SSM_State is 10+1*/
+#define		LEDBEEPSTATE_LENGTH	4			/* Maximum length for LeedBeep_State is 3+1*/
+#define		SSM_INIT_TEXT		"SSM_INIT"
+#define		SSM_ACTIVE_TEXT		"SSM_ACTIVE"
+#define		SSM_ERROR_TEXT		"SSM_ERROR"		
+#define		SSM_NO_STATE		4
+#define		OFF_TEXT			"OFF"
+#define		ON_TEXT				"ON"
+#define		LEDBEEP_NO_STATE	2
 
 #ifndef INPUT_HEADER
 #define INPUT_HEADER
@@ -112,6 +122,13 @@ typedef struct error_state {
 }ErrorStructure;
 #endif
 
+#ifndef TEST
+#define TEST
+typedef struct test_structure {
+	SysStMState SSM_State;
+	uint8_t LedBeepState;
+}testStructure;
+#endif
 
 #ifndef boolean
 typedef uint8_t boolean;

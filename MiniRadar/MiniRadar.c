@@ -13,6 +13,8 @@
 
 #include "MiniRadar.h"
 
+#define UNDER_TEST TRUE
+
 uint8_t warning_led     = DEFAULT;      /* SET or RESET the warning led */
 uint8_t warning_beep    = DEFAULT;      /* SET or RESET the warning buzzer*/
 uint8_t batteryVoltage  = DEFAULT;      /* Input value, normally between 8V and 16V */
@@ -20,18 +22,20 @@ boolean waitForRead     = FALSE;        /* Wait for 1s being passed to read data
 time_t  seconds;                        /* Variable for checking the 1s reading and 5s initialization*/
 INPUT   data;                           /* Input data structure */
 
+/* Test variables */
+testStructure test;                     /* Test structure for expected values */
+
 /* Start-up function for initializing stuff */
 void start_up();
-
-/* Set warning signs if we are in a collision zone
-   and the warning features are ON */
-void checkAndSetLedAndBeep();
 
 /* Print the values from the input and the ongoing states */
 void printValuesAndStates();
 
 /* If all values are 255, we enter in slepp mode, and prepare for full stop */
 boolean checkIfEnteringSleepMode();
+
+/* TESTS */
+void doTests();
 
 int main()
 {
@@ -74,12 +78,27 @@ int main()
                and the warning features are ON */
             WF_WarningSigns(data);
 
-            /* Print the values from the input and the ongoing states */
-            printValuesAndStates();
+
+            if (UNDER_TEST == TRUE) {
+                doTests();
+            }
+            else {
+                /* Print the values from the input and the ongoing states */
+                printValuesAndStates();
+            }
 
             prev_seconds = time(NULL);
         }
         
+    }
+
+    if (UNDER_TEST == TRUE)
+    {
+        printf("\n____________________\n");
+        printf("\nNR. OF TESTS: \t%d\n", tests_run);
+        printf("TESTS PASSED: \t%d\n", (tests_run - tests_failed));
+        printf("TESTS FAILED: \t%d\n", tests_failed);
+        printf("\n____________________\n");
     }
 
     fclose(fp);
@@ -101,9 +120,10 @@ void printValuesAndStates() {
     
     /* Print System state machine state */
     char* SSM_State_Msg = "";
-    if (SSM_State == SSM_INIT)   SSM_State_Msg = "SSM_INIT";
-    if (SSM_State == SSM_ACTIVE) SSM_State_Msg = "SSM_ACTIVE";
-    if (SSM_State == SSM_ERROR)  SSM_State_Msg = "SSM_ERROR";
+    if (SSM_State == SSM_INIT)  { SSM_State_Msg = "SSM_INIT"  ; }
+    if (SSM_State == SSM_ACTIVE){ SSM_State_Msg = "SSM_ACTIVE"; }
+    if (SSM_State == SSM_ERROR) { SSM_State_Msg = "SSM_ERROR" ; }
+    
     printf("SSM_State: %s\n", SSM_State_Msg);
 
     /* Print the state of the possible error (if it exits) */
@@ -117,15 +137,18 @@ void printValuesAndStates() {
 boolean checkIfEnteringSleepMode() {
 
     /* Stop value is UINT8_MAX == 255 in this case which means end of file */
-    if (STOP_VALUE == data.distance && 
-        STOP_VALUE == data.gear &&
-        STOP_VALUE == data.speed && 
-        STOP_VALUE == data.steeringWheel &&
-        STOP_VALUE == data.batteryVoltage) {
+    if (STOP_VALUE == data.distance 
+     && STOP_VALUE == data.gear
+     && STOP_VALUE == data.speed 
+     && STOP_VALUE == data.batteryVoltage) {
 
-        printf("The system enters in SLEEP Mode, then it stops working...\n");
+        printf("\nThe system enters in SLEEP Mode, then it stops working...\n");
         return TRUE;
     }
     
     return FALSE;
+}
+
+void doTests() {
+    testMain();
 }

@@ -22,7 +22,11 @@ boolean LCW_IsGearOnForward(uint8_t gear) {
 }
 
 boolean LCW_IsSteeringWheelAngleOver6(uint8_t angle) {
-	return (angle > LCW_STEERING_ANGLE);
+	return (((STEERING_ANGLE_MIN <= angle)
+		&&  ((STEERING_ANGLE_MID - LCW_STEERING_ANGLE) > angle))
+		|| 
+		   (((STEERING_ANGLE_MID + LCW_STEERING_ANGLE) < angle)
+		&&   (STEERING_ANGLE_MAX >= angle)));
 }
 
 boolean LCW_IsSystemStateMachineActive(uint8_t SSM_status) {

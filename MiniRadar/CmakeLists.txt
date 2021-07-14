@@ -1,0 +1,4 @@
+cmake_minimum_required (VERSION 2.6)
+project (MiniRadar)
+add_executable(MiniRadar MiniRadar.c)
+add_executable(TestMain testMain.c)

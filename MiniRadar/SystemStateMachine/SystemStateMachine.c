@@ -25,20 +25,24 @@ void SysStM_MainFunction() {
 		switch (SSM_State) {
 
 		case SSM_INIT: {
-			if (error.failed != NO_ERROR)
+			if (error.failed != NO_ERROR) {
 				SSM_State = SSM_ERROR;
-			else 
+			}
+			else {
 				SSM_State = SSM_ACTIVE;
+			}
 		}
 		break;
 		case SSM_ACTIVE: {
-			if (error.failed != NO_ERROR)
+			if (error.failed != NO_ERROR) {
 				SSM_State = SSM_ERROR;
+			}
 		}
 		break;
 		case SSM_ERROR: {
-			if (error.failed == NO_ERROR)
+			if (error.failed == NO_ERROR) {
 				SSM_State = SSM_ACTIVE;
+			}
 		}
 		break;
 		default:
