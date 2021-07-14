@@ -12,7 +12,7 @@
 
 #include "Warning_Feature.h"
 
-FeatureState LCW_Feature_State = PASSIVE;
+FeatureState LCW_Feature_State	= PASSIVE;
 FeatureState RCTA_Feature_State = PASSIVE;
 
 boolean WF_IsLCWActive(INPUT data) {
@@ -38,8 +38,8 @@ void setRCTA_Feature_State(FeatureState state) {
 
 void WF_WarningSigns(INPUT data) {
 	
-	if ((WF_IsLCWActive (data) == TRUE && LCW_IsInCollisionZone (data.distance) == TRUE)
-	||  (WF_IsRCTAActive(data) == TRUE && RCTA_IsInCollisionZone(data.distance) == TRUE))
+	if (((WF_IsLCWActive (data) == TRUE) && (LCW_IsInCollisionZone (data.distance) == TRUE))
+	 || ((WF_IsRCTAActive(data) == TRUE) && (RCTA_IsInCollisionZone(data.distance) == TRUE)))
 	{
 		warning_led  = WARNING_ACTIVE;
 		warning_beep = WARNING_ACTIVE;

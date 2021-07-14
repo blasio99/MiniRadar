@@ -13,16 +13,16 @@
 
 #include "Constants.h"
 
-extern uint8_t tests_run;       /* Number of tests runned */
-extern uint8_t tests_failed;    /* Number of tests failed */
+extern  uint8_t         tests_run;       /* Number of tests runned */
+extern  uint8_t         tests_failed;    /* Number of tests failed */
 
-extern uint8_t warning_led;
-extern uint8_t warning_beep;
-extern SysStMState SSM_State;
+extern  uint8_t         warning_led;
+extern  uint8_t         warning_beep;
+extern  SysStMState     SSM_State;
 
-extern testStructure test;
-extern INPUT input; 
-extern ErrorStructure error;
+extern  testStructure   test;
+extern  INPUT           input; 
+extern  ErrorStructure  error;
 
 /* Fail macro to print error message */
 #define FAIL() \

@@ -13,5 +13,5 @@
 
 #include "../Constants.h"
 
-extern SysStMState SSM_State;
-extern ErrorStructure error;
+extern	SysStMState		SSM_State;
+extern	ErrorStructure	error;

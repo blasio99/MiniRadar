@@ -12,8 +12,8 @@
 
 #include "testMain.h"
 
-uint8_t tests_run = DEFAULT;
-uint8_t tests_failed = DEFAULT;
+uint8_t tests_run       = DEFAULT;
+uint8_t tests_failed    = DEFAULT;
 
 int assert_helper() {
     _assert(((SSM_State == test.SSM_State) && (warning_led == test.LedBeepState)));

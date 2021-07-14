@@ -13,8 +13,8 @@
 
 #include "SystemStateMachine.h"
 
-boolean waitForInit = TRUE;
-SysStMState SSM_State = SSM_INIT;
+boolean		waitForInit = TRUE;
+SysStMState SSM_State	= SSM_INIT;
 
 void SysStM_MainFunction() {
 
