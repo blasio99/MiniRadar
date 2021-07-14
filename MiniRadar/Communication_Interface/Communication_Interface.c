@@ -14,12 +14,11 @@
 
 #include "Communication_Interface.h"
 
-time_t secondsForRead;
 INPUT input = { DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT };
 
 /* TEST variables */
-char inputTextLedBeep[3];
-char inputTextSSMState[11];
+char inputTextLedBeep  [LEDBEEPSTATE_LENGTH];
+char inputTextSSMState [SSMSTATE_LENGTH];
 
 void LostCommunicationHandler(Error error_type, char* error_message) {
     error.failed        = error_type;
@@ -57,13 +56,13 @@ boolean ComIF_IsBatteryVoltageInGoodRange() {
 void inputTextParser() {
     
     /* The first input of desired expected value is STRING, so we transform it to INTEGER */
-    if (strcmp(inputTextSSMState, SSM_ACTIVE_TEXT) == 0) {
+    if (STR_EQUAL == strcmp(inputTextSSMState, SSM_ACTIVE_TEXT)) {
         test.SSM_State = SSM_ACTIVE;
     }
-    else if (strcmp(inputTextSSMState, SSM_INIT_TEXT) == 0) {
+    else if (STR_EQUAL == strcmp(inputTextSSMState, SSM_INIT_TEXT)) {
         test.SSM_State = SSM_INIT;
     }
-    else if (strcmp(inputTextSSMState, SSM_ERROR_TEXT) == 0) {
+    else if (STR_EQUAL == strcmp(inputTextSSMState, SSM_ERROR_TEXT)) {
         test.SSM_State = SSM_ERROR;
     }
     else {
@@ -71,18 +70,18 @@ void inputTextParser() {
     }
 
     /* We do the same with the second test input */
-    if (strcmp(inputTextLedBeep, OFF_TEXT) == 0) {
+    if (STR_EQUAL == strcmp(inputTextLedBeep, OFF_TEXT)) {
         test.LedBeepState = WARNING_INACTIVE;
     }
-    else if (strcmp(inputTextLedBeep, ON_TEXT) == 0) {
+    else if (STR_EQUAL == strcmp(inputTextLedBeep, ON_TEXT)) {
         test.LedBeepState = WARNING_ACTIVE;
     }
     else {
         test.LedBeepState = LEDBEEP_NO_STATE;
     }
 
-    memset(inputTextSSMState, 0, strlen(inputTextSSMState));
-    memset(inputTextLedBeep,  0, strlen(inputTextLedBeep ));
+    memset(inputTextSSMState, DEFAULT, strlen(inputTextSSMState));
+    memset(inputTextLedBeep,  DEFAULT, strlen(inputTextLedBeep ));
 
 }
 
@@ -95,8 +94,8 @@ INPUT ComIF_read_inputData(FILE* fp) {
         LostCommunicationHandler(SPEED_WRONG_INPUT, SPEED_WRONG_INPUT_MSG);
     }
     else {
-        input.speed = input_value;
-        if (error.failed == SPEED_WRONG_INPUT) {
+        input.speed = (uint8_t)input_value;
+        if (SPEED_WRONG_INPUT == error.failed) {
             clearErrorStructure();
         }
     }
@@ -105,8 +104,8 @@ INPUT ComIF_read_inputData(FILE* fp) {
         LostCommunicationHandler(GEAR_WRONG_INPUT, GEAR_WRONG_INPUT_MSG);
     }
     else {
-        input.gear = input_value;
-        if (error.failed == GEAR_WRONG_INPUT) {
+        input.gear = (uint8_t)input_value;
+        if (GEAR_WRONG_INPUT == error.failed) {
             clearErrorStructure();
         }
     }
@@ -119,8 +118,8 @@ INPUT ComIF_read_inputData(FILE* fp) {
             LostCommunicationHandler(STEERINGWHEEL_WRONG_INPUT, STEERINGWHEEL_WRONG_INPUT_MSG);
         }
         else {
-            input.steeringWheel = input_value + STEERING_ANGLE_MID;
-            if (error.failed == STEERINGWHEEL_WRONG_INPUT) {
+            input.steeringWheel = (uint8_t)(input_value + STEERING_ANGLE_MID);
+            if (STEERINGWHEEL_WRONG_INPUT == error.failed) {
                 clearErrorStructure();
             }
         }
@@ -130,8 +129,8 @@ INPUT ComIF_read_inputData(FILE* fp) {
         LostCommunicationHandler(DISTANCE_WRONG_INPUT, DISTANCE_WRONG_INPUT_MSG);
     }
     else {
-        input.distance = input_value;
-        if (error.failed == DISTANCE_WRONG_INPUT) {
+        input.distance = (uint8_t)input_value;
+        if (DISTANCE_WRONG_INPUT == error.failed) {
             clearErrorStructure();
         }
     }
@@ -140,8 +139,8 @@ INPUT ComIF_read_inputData(FILE* fp) {
         LostCommunicationHandler(BATTERYVOLTAGE_WRONG_INPUT, BATTERYVOLTAGE_WRONG_INPUT_MSG);
     }
     else {
-        input.batteryVoltage = input_value;
-        if (error.failed == BATTERYVOLTAGE_WRONG_INPUT) {
+        input.batteryVoltage = (uint8_t)input_value;
+        if (BATTERYVOLTAGE_WRONG_INPUT == error.failed) {
             clearErrorStructure();
         }
     }
@@ -163,11 +162,9 @@ INPUT ComIF_read_inputData(FILE* fp) {
     {
         LostCommunicationHandler(LOST_COMMUNICATION, LOST_COMMUNICATION_MSG);
     }
-    else if (error.failed == LOST_COMMUNICATION) {
+    else if (LOST_COMMUNICATION == error.failed) {
         clearErrorStructure();
     }
 
-
     return input;
-
 }

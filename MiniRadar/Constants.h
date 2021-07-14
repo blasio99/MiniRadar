@@ -87,13 +87,14 @@
 /* TEST defines */
 #define		SSMSTATE_LENGTH		11			/* Maximum length for SSM_State is 10+1*/
 #define		LEDBEEPSTATE_LENGTH	4			/* Maximum length for LeedBeep_State is 3+1*/
+#define		SSM_NO_STATE		4
+#define		LEDBEEP_NO_STATE	2
+#define		STR_EQUAL			0
 #define		SSM_INIT_TEXT		"SSM_INIT"
 #define		SSM_ACTIVE_TEXT		"SSM_ACTIVE"
 #define		SSM_ERROR_TEXT		"SSM_ERROR"		
-#define		SSM_NO_STATE		4
 #define		OFF_TEXT			"OFF"
 #define		ON_TEXT				"ON"
-#define		LEDBEEP_NO_STATE	2
 
 #ifndef INPUT_HEADER
 #define INPUT_HEADER
